@@ -2,50 +2,320 @@
     font-family: Montserrat;
     src: url(./font/Montserrat-Black.ttf);
   } */
-html, body{
+
+:root {
+    --large: rgba(20, 163, 136, 1);
+    --mid: rgba(19, 188, 156, 1);
+    --invt: rgba(66, 91, 119, 1);
+}
+
+html, body {
     font-family: 'Montserrat', sans-serif;
 }
-header{
+
+header {
     background: rgba(239, 239, 239, 1);
     padding: 10px;
 }
-header img:nth-child(2){
+
+header img:nth-child(2) {
     margin-left: 20px;
 }
-header img:nth-child(3){
+
+header img:nth-child(3) {
     margin-top: 10px;
 }
-li{
-    list-style: none;
-}
-.portfolio_header{
+
+.portfolio_header {
     text-align: center;
+    margin: 30px 0px;
+    padding: 20px 5px;
 }
-.portfolio_header h2{
-    font-size: 48pt;
+
+.portfolio_header p {
+    font-size: 32pt;
     font-weight: 300;
-    line-height: 48pt;
+    line-height: 32pt;
 }
-.portfolio_header h6{
+
+.portfolio_header h6 {
     font-size: 12pt;
     font-weight: 500;
-    /* line-height: 14px; */
+    line-height: 12px;
 }
-.goal{
+
+.goal {
+    margin: 30px 0;
+    padding: 20px 5px;
     display: flex;
 }
-.goal li{
-    flex: 0.2;
-}
-.goal_value{
+
+.goal_value {
     display: block;
     font-size: 18pt;
     font-weight: 500;
-    line-height: 20pt;
+    line-height: 19pt;
 }
-.goal_name{
+
+.goal_name {
     display: block;
     font-size: 8pt;
     font-weight: 400;
-    line-height: 10pt;
+    line-height: 9pt;
 }
+
+.goal_ {
+    flex: 1;
+    display: flex;
+}
+
+.goal_2 {
+    flex: 0.8;
+}
+
+.goal_ div:first-child() {
+    flex: 0.4;
+}
+
+.goal_ div:nth-child(2) {
+    flex: 1;
+    margin-left: 5px;
+}
+
+.Investment_details {
+    display: flex;
+    clear: both;
+}
+
+.Investment_details_chart {
+    flex: 0.3;
+}
+
+.Investment_details_company {
+    flex: 0.7;
+}
+
+.Investment_details_company>span {
+    float: right;
+    font-size: 8px;
+}
+
+.company_details {
+    width: 100%;
+    display: flex;
+    box-shadow: 2px 2px 5px 2px #eaeaea;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.company_details :hover {
+    border-left: 2px solid rgba(20, 163, 136, 1);
+}
+
+.company_type {
+    flex: 0.85;
+    color: rgb(102, 102, 102);
+    padding: 5px 15px;
+}
+
+.company_invt_amt {
+    flex: 0.15;
+    text-align: center;
+    padding: 10px 0px;
+    font-size: 20pt;
+    color: #fff;
+}
+
+.company_invt_amt :hover, .company_type :hover {
+    border-left: 0px solid rgba(20, 163, 136, 1);
+}
+
+.company_invt_l {
+    background: var(--large);
+}
+
+.company_invt_m {
+    background: var(--mid);
+}
+
+.company_invt_i {
+    background: var(--invt);
+}
+
+.large_cap {
+    display: inline-block;
+    width: 40%;
+}
+
+.large_cap::before {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(20, 163, 136, 1);
+}
+
+.large_cap::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(20, 163, 136, 1);
+}
+
+.invest_btn {
+    background: var(--mid);
+    border: none;
+    padding: 10px 30px;
+    color: #fff;
+    font-size: 18pt;
+    align-self: center;
+}
+
+@import "compass/css3";
+.wrapper {
+    position: relative;
+    /* margin: 40px auto; */
+    background: white;
+}
+
+@mixin timer($item, $duration, $size, $color, $border, $hover: running) {
+    #{$item}, #{$item} * {
+        @include box-sizing(border-box);
+    }
+    #{$item} {
+        width: $size;
+        height: $size;
+    }
+    #{$item} .pie {
+        width: 50%;
+        height: 100%;
+        transform-origin: 100% 50%;
+        position: absolute;
+        background: $color;
+        border: #{$border};
+    }
+    #{$item} .spinner {
+        border-radius: 100% 0 0 100% / 50% 0 0 50%;
+        z-index: 200;
+        border-right: none;
+        animation: rota $duration + s linear infinite;
+    }
+    #{$item}:hover .spinner, #{$item}:hover .filler, #{$item}:hover .mask {
+        animation-play-state: $hover;
+    }
+    #{$item} .filler {
+        border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+        left: 50%;
+        opacity: 0;
+        z-index: 100;
+        animation: opa $duration + s steps(1, end) infinite reverse;
+        border-left: none;
+    }
+    #{$item} .mask {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        background: inherit;
+        opacity: 1;
+        z-index: 300;
+        animation: opa $duration + s steps(1, end) infinite;
+    }
+    @keyframes rota {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes opa {
+        0% {
+            opacity: 1;
+        }
+        50%, 100% {
+            opacity: 0;
+        }
+    }
+}
+
+@include timer('.wrapper', 5, 250px, #08C, '5px solid rgba(0,0,0,0.5)');
+/* Media Query */
+
+/* Extra small devices (portrait phones, less than 576px) */
+
+@media (max-width: 575.98px) {
+    h5 {
+        font-size: 0.5rem;
+    }
+    .portfolio_header {
+        text-align: center;
+        margin: 15px 0px;
+        padding: 10px 0px;
+    }
+    .portfolio_header p {
+        font-size: 14pt;
+        line-height: 14pt;
+    }
+    .portfolio_header h6 {
+        font-size: 9pt;
+        line-height: 9pt;
+    }
+    .goal {
+        margin: 15px 0;
+        padding: 10px 0px;
+        flex-basis: 100%;
+    }
+    .goal_, .goal_2 {
+        flex: 1;
+        flex-basis: 50%;
+    }
+    /* .goal_ {
+        flex: 0.6;
+    }
+    .goal_2 {
+        flex: 0.4;
+    } */
+    .company_details {
+        margin: 5px;
+    }
+    .Investment_details {
+        display: block;
+    }
+    .company_type {
+        width: 100%;
+        display: block;
+        flex: none;
+    }
+    .company_type span {
+        display: block;
+        width: 100%;
+        font-size: 8pt;
+    }
+    .company_invt_amt {
+        width: 100%;
+        flex: none;
+        display: block;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .portfolio_header p {
+        font-size: 18pt;
+        line-height: 18pt;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) and (max-width: 991.98px) {}
+
+/* Large devices (desktops, 992px and up) */
+
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {}
